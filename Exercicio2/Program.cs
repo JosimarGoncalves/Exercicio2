@@ -5,10 +5,9 @@ using System.Diagnostics;
 class Program
 {
     public static int[] numeroSorteado = new int[100];
-    public static int valorMinimo = 15;
+    public static int valorMinimo = 100;
     public static int valorMaximo = 500;
-    public static int maiorValorEncontrado =0;
-    public static int menorValorEncontrado = 0;
+    
 
     static void Main()
     {
@@ -16,15 +15,17 @@ class Program
 
         var stopWatch = new Stopwatch();
 
-       
-
+        stopWatch.Start();
+        
+        Console.WriteLine("Numeros Sorteados:");
+        PularLinha();
         for (int i = 0; i <numeroSorteado.Length; i++)
         {
             numeroSorteado[i] = numeroAleatorio.Next(valorMinimo, valorMaximo);
         }
-        
 
-        //stopWatch.Start();
+        
+        
 
         Thread t1 = new Thread(BuscarMaiorValor);
         t1.Start();
@@ -35,11 +36,30 @@ class Program
         t1.Join();
         t2.Join();
 
+        int maiorValorEncontrado = numeroSorteado[0];
+        int menorValorEncontrado = numeroSorteado[0];
+
+        for (int i = 0; i < numeroSorteado.Length; i++)
+        {
+            if (numeroSorteado[i] > maiorValorEncontrado)
+            {
+                maiorValorEncontrado = numeroSorteado[i];
+            }
+
+            if (numeroSorteado[i] < menorValorEncontrado)
+            {
+                menorValorEncontrado = numeroSorteado[i];
+            }
+        }
+
+        PularLinha();
 
         Console.WriteLine("\nMaior valor encontrado: " + maiorValorEncontrado + "  " + "e o Menor valor encontrado: " + menorValorEncontrado);
+        PularLinha();
 
+        stopWatch.Start();
 
-
+        Console.WriteLine($"O Tempo de processamento total é de {stopWatch.ElapsedMilliseconds}ms");
     }
 
     public static void BuscarMaiorValor()
@@ -47,27 +67,20 @@ class Program
         for (int i = 1; i <numeroSorteado.Length; i++)
         {
             Console.Write(numeroSorteado[i] + " - ");
-            if (numeroSorteado[i] > maiorValorEncontrado)
-            {
-                maiorValorEncontrado = numeroSorteado[i];
-            }
-            
+                      
         }
        
     }
 
     public static void BuscarMenorValor()
     {
-        for (int i = 1; i < numeroSorteado.Length; i++)
+        for (int i = 0; i < numeroSorteado.Length; i++)
         {
             Console.Write(numeroSorteado[i] + " - ");
-            if (numeroSorteado[i] < menorValorEncontrado)
-            {
-                menorValorEncontrado = numeroSorteado[i];
-            }
+            
 
         }
-        
+       
     }
 
     public static void PularLinha()
