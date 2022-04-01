@@ -17,7 +17,7 @@ class Program
 
         stopWatch.Start();
         
-        Console.WriteLine("Numeros Sorteados:");
+        Console.WriteLine("Numeros Sorteados entre: {0} e {1}",valorMinimo,valorMaximo);
         PularLinha();
         for (int i = 0; i <numeroSorteado.Length; i++)
         {
